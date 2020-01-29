@@ -42,7 +42,7 @@ class SignIn extends Component {
 						value={this.state.email}
 						handleChange={this.handleChange}
 						label='Email'
-						autoComplete='user'
+						autoComplete='current-email'
 						required
 					/>
 					<FormInput
