@@ -16,7 +16,7 @@ class SignIn extends Component {
 		};
 	}
 
-	handlesubmit = e => {
+	handleSubmit = e => {
 		e.preventDefault();
 		this.setState({
 			email: '',
@@ -32,7 +32,7 @@ class SignIn extends Component {
 
 	render() {
 		return (
-			<div className='sign-in' onSubmit={this.handlesubmit}>
+			<div className='sign-in' onSubmit={this.handleSubmit}>
 				<h2>I already have an account</h2>
 				<span>Sign in with your email and your password</span>
 				<form>
