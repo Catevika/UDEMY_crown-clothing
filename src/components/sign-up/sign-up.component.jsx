@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+import { signUpStart } from '../../redux/user/user.actions';
 
-import './sign-up.styles.scss';
+import { SignUpContainer, SignUpTitle } from './sign-up.styles';
 
-class SignUp extends React.Component {
+class SignUp extends Component {
 	constructor() {
 		super();
 
@@ -21,7 +22,7 @@ class SignUp extends React.Component {
 
 	handleSubmit = async event => {
 		event.preventDefault();
-
+		const { signUpStart } = this.props;
 		const { displayName, email, password, confirmPassword } = this.state;
 
 		if (password !== confirmPassword) {
@@ -29,23 +30,7 @@ class SignUp extends React.Component {
 			return;
 		}
 
-		try {
-			const { user } = await auth.createUserWithEmailAndPassword(
-				email,
-				password
-			);
-
-			await createUserProfileDocument(user, { displayName });
-
-			this.setState({
-				displayName: '',
-				email: '',
-				password: '',
-				confirmPassword: ''
-			});
-		} catch (error) {
-			console.error(error);
-		}
+		signUpStart({ displayName, email, password });
 	};
 
 	handleChange = event => {
@@ -57,8 +42,8 @@ class SignUp extends React.Component {
 	render() {
 		const { displayName, email, password, confirmPassword } = this.state;
 		return (
-			<div className='sign-up'>
-				<h2 className='title'>I do not have an account</h2>
+			<SignUpContainer>
+				<SignUpTitle>I do not have a account</SignUpTitle>
 				<span>Sign up with your email and password</span>
 				<form className='sign-up-form' onSubmit={this.handleSubmit}>
 					<FormInput
@@ -66,8 +51,8 @@ class SignUp extends React.Component {
 						name='displayName'
 						value={displayName}
 						onChange={this.handleChange}
-						label='Name'
-						autoComplete='current-user'
+						label='Display Name'
+						autoComplete='displayName'
 						required
 					/>
 					<FormInput
@@ -76,7 +61,7 @@ class SignUp extends React.Component {
 						value={email}
 						onChange={this.handleChange}
 						label='Email'
-						autoComplete='current-email'
+						autoComplete='email'
 						required
 					/>
 					<FormInput
@@ -85,7 +70,7 @@ class SignUp extends React.Component {
 						value={password}
 						onChange={this.handleChange}
 						label='Password'
-						autoComplete='current-password'
+						autoComplete='password'
 						required
 					/>
 					<FormInput
@@ -94,14 +79,18 @@ class SignUp extends React.Component {
 						value={confirmPassword}
 						onChange={this.handleChange}
 						label='Confirm Password'
-						autoComplete='current-password'
+						autoComplete='password'
 						required
 					/>
 					<CustomButton type='submit'>SIGN UP</CustomButton>
 				</form>
-			</div>
+			</SignUpContainer>
 		);
 	}
 }
 
-export default SignUp;
+const mapDispatchToProps = dispatch => ({
+	signUpStart: userCredentials => dispatch(signUpStart(userCredentials))
+});
+
+export default connect(null, mapDispatchToProps)(SignUp);
