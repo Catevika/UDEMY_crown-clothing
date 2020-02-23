@@ -18,4 +18,6 @@ const HomePage = () => {
 	);
 };
 
+// Profiler is included in dev tools to collect timing information about components
+
 export default HomePage;
