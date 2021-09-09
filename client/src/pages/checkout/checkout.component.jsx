@@ -37,14 +37,14 @@ export const CheckoutPage = ({ cartItems, total }) => (
 				<span>Remove</span>
 			</HeaderBlockContainer>
 		</CheckoutHeaderContainer>
-		{cartItems.map(cartItem => (
+		{cartItems.map((cartItem) => (
 			<CheckoutItem key={cartItem.id} cartItem={cartItem} />
 		))}
 		<TotalContainer>TOTAL: ${total}</TotalContainer>
 		<WarningContainer>
 			*Please use the following test credit card for payments*
 			<br />
-			4242 4242 4242 4242 - Exp: 01/21 - CVV: 123
+			4242 4242 4242 4242 - Exp: 01/23 - CVV: 123
 		</WarningContainer>
 		<StripeCheckoutButton price={total} />
 	</CheckoutPageContainer>
